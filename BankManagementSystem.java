@@ -7,12 +7,16 @@ public class BankManagementSystem{
         
 
         Bank bank = new Bank();
-        BankAccount account1 = new BankAccount(101, "Sourav", 5000);
-        BankAccount account2 = new BankAccount(102, "Rahul", 8000);
-
-
-        bank.addAccount(account1);
-        bank.addAccount(account2);
+        try{
+            BankAccount account1 = new BankAccount(101, "Sourav", 5000);
+            BankAccount account2 = new BankAccount(102, "Rahul", 8000);
+    
+    
+            bank.addAccount(account1);
+            bank.addAccount(account2);
+        }catch(BankException e){
+            System.out.println("Error : " + e.getMessage());
+        }
 
         int choice = 0;
         while(choice != 7){
@@ -90,10 +94,14 @@ public class BankManagementSystem{
                                         String name = scanner.next();
                                         System.out.print("Enter initial Balance : ");
                                         double balance = scanner.nextDouble();
-    
-                                        BankAccount account = new BankAccount(accountNumber, name, balance);
-                                        bank.addAccount(account);
-                                        System.out.println("Account created successfully");
+                                        
+                                        try{
+                                            BankAccount account = new BankAccount(accountNumber, name, balance);
+                                            bank.addAccount(account);
+                                            System.out.println("Account created successfully");
+                                        }catch(BankException e){
+                                            System.out.println("Error : " + e.getMessage());
+                                        }
                                     }
                                     break;
 

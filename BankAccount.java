@@ -8,7 +8,18 @@ public class BankAccount {
 
     private ArrayList<Transaction> transactions = new ArrayList<>();
 
-    public BankAccount(int accountNumber, String accountHolderName, double balance){
+    public BankAccount(int accountNumber, String accountHolderName, double balance) throws BankException{
+        if(accountNumber <= 0){
+            throw new BankException("Account Number Must be greater than 0");
+        }
+
+        if(accountHolderName == null || accountHolderName.trim().isEmpty()){
+            throw new BankException("Account Holder Name can not be empty");
+        }
+        
+        if(balance < 0){
+           throw new BankException("Balance can not be negative");
+        }
         this.accountNumber = accountNumber;
         this.accountHolderName = accountHolderName;
         this.balance = balance;
