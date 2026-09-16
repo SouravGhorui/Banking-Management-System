@@ -16,10 +16,24 @@ public class Bank {
         return null;
     }
 
+    public void displayAccount(int accountNumber){
+        BankAccount account = getAccount(accountNumber);
+
+        if(account != null){
+            account.displayAccount();
+        }else{
+            System.out.println("Account does not exist");
+        }
+    }
+
     public void deposit(int accountNumber, double amount){
         BankAccount account = getAccount(accountNumber);
         if(account != null){
-            account.deposit(amount);
+            try{
+                account.deposit(amount);
+            }catch(BankException e){
+                System.out.println("Error : " + e.getMessage());
+            }
         }else{
             System.out.println("Account does not exist");
         }
@@ -29,7 +43,11 @@ public class Bank {
         BankAccount account = getAccount(accountNumber);
 
         if(account != null){
-            account.withdraw(amount);
+            try{
+                account.withdraw(amount);
+            }catch(BankException e){
+                System.out.println("Error : " + e.getMessage());
+            }
         }else{
             System.out.println("Account does not exist");
         }
@@ -82,6 +100,43 @@ public class Bank {
             }
         }
         return false;
+    }
+
+    public int getAccountCount(){
+        return accounts.size();
+    }
+
+    public void transferMoney(int senderAccountNumber, int recieverAccountNumber, double amount){
+        BankAccount sender = getAccount(senderAccountNumber);
+        BankAccount reciever = getAccount(recieverAccountNumber);
+
+        if(sender == null){
+            System.out.println("Sender account does not exist.");
+            return ;
+        }
+
+        if(reciever == null){
+            System.out.println("Reciever account does not exist");
+            return ;
+        }
+
+        if(amount <= 0){
+            System.out.println("Transfer money amount must be greater than 0");
+            return ;
+        }
+
+        if(amount > getBalance(senderAccountNumber)){
+            System.out.println("Insufficient balance");
+            return ;
+        }
+
+        try{
+            sender.withdraw(amount);
+            reciever.deposit(amount);
+            System.out.println("Monet transfered successfully");
+        }catch(BankException e){
+            System.out.println("Error : " + e.getMessage());
+        }
     }
 }
 

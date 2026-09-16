@@ -19,7 +19,7 @@ public class BankManagementSystem{
         }
 
         int choice = 0;
-        while(choice != 7){
+        while(choice != 10){
         System.out.println("===== BANK MENU =====");
         System.out.println("1. Deposit Money");
         System.out.println("2. Withdraw Money");
@@ -27,7 +27,10 @@ public class BankManagementSystem{
         System.out.println("4. View Transactions");
         System.out.println("5. Account Details");
         System.out.println("6. Create Account");
-        System.out.println("7. Exit");
+        System.out.println("7. Total Account");
+        System.out.println("8. Search Account");
+        System.out.println("9. Transfer Money");
+        System.out.println("10. Exit");
         System.out.println();
 
         System.out.print("Enter your choice : ");
@@ -78,8 +81,7 @@ public class BankManagementSystem{
                                 System.out.print("Enter Account Number : ");
                                 int accountNumber = scanner.nextInt();
                                 
-                                System.out.println("Account Holder : " + bank.getAccountHolderName(accountNumber));
-                                System.out.println("Current Balance : " + bank.getBalance(accountNumber));
+                                bank.displayAccount(accountNumber);
                                 break;
                             }
                                 case 6:{
@@ -106,9 +108,40 @@ public class BankManagementSystem{
                                     break;
 
                                 }
-                                    case 7:
-                                        System.out.println("===== EXIT =====");
+                                    case 7:{
+                                        System.out.println("===== TOTAL ACCOUNTS =====");
+                                        System.out.println("Total Accounts : " + bank.getAccountCount());
                                         break;
+                                    }
+                                        case 8:{
+                                            System.out.println("===== SEARCH ACCOUNT =====");
+
+                                            System.out.println("Enter Account Number : ");
+                                            int accountNumber = scanner.nextInt();
+
+                                            if(bank.accountExists(accountNumber)){
+                                                System.out.println("Account Found");
+                                            }else{
+                                                System.out.println("Account does not exist");
+                                            }
+                                            break;
+                                        }
+                                            case 9:{
+                                                System.out.println("===== TRANSFER MONEY =====");
+
+                                                System.out.println("Enter Sender Account Number : ");
+                                                int senderAccountNumber = scanner.nextInt();
+                                                System.out.println("Enter Reciever Account Number : ");
+                                                int receiverAccountNumber = scanner.nextInt();
+                                                System.out.println("Enter Transfer Money Amount : ");
+                                                double amount = scanner.nextDouble();
+
+                                                bank.transferMoney(senderAccountNumber, receiverAccountNumber, amount);
+                                                break;
+                                            }
+                                                case 10:
+                                                    System.out.println("===== EXIT =====");
+                                                    break;
             default:
                 System.out.println("Invalid choice");
                 break;

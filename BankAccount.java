@@ -49,29 +49,35 @@ public class BankAccount {
         System.out.println("Account Number : " + accountNumber);
         System.out.println("Account Holder : " + accountHolderName);
         System.out.println("Balance : " + balance);
+        System.out.println("Total Transaction : " + transactions.size());
     }
 
-    public void deposit(double amount){
+    public void deposit(double amount) throws BankException{
         if(amount > 0){
             balance += amount;
             Transaction transaction = new Transaction("DEPOSIT", amount, "Money deposited");
             transactions.add(transaction);
         }else{
-            System.out.println("Deposit amount can not be Negative.");
+            throw new BankException("Deposit amount must be greater than 0");
         }
     }
 
-    public void withdraw(double amount){
+    public void withdraw(double amount) throws BankException{
         if(amount > 0 && amount <= balance){
             balance -= amount;
             Transaction transaction = new Transaction("WITHDRAW", amount, "Money withdrawn");
             transactions.add(transaction);
         }else{
-            System.out.println("Withdraw amount can not be less than or equal to zero and greater than balance");
+            throw new BankException("Withdraw amount must be greater than 0 and less than or equal to balance");
         }
     }
 
     public void displayTransactions(){
+        if(transactions.isEmpty()){
+            System.out.println("No transactions found.");
+            return;
+        }
+
         for(Transaction transaction : transactions){
             transaction.displayTransaction();
         }
