@@ -130,13 +130,18 @@ public class Bank {
             return ;
         }
 
-        try{
-            sender.withdraw(amount);
-            reciever.deposit(amount);
-            System.out.println("Monet transfered successfully");
-        }catch(BankException e){
-            System.out.println("Error : " + e.getMessage());
-        }
+        
+        sender.setBalance(sender.getBalance() - amount);
+        reciever.setBalance(reciever.getBalance() + amount);
+
+        Transaction senderTransaction = new Transaction("TRANSFER", amount, "Money transferred to account " + recieverAccountNumber);
+        sender.addTransaction(senderTransaction);
+
+        Transaction recieverTransaction = new Transaction("TRANSFER", amount, "Money received from account " + senderAccountNumber);
+        reciever.addTransaction(recieverTransaction);
+
+        System.out.println("Money transfered successfully");
+        
     }
 }
 

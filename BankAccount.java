@@ -87,4 +87,8 @@ public class BankAccount {
     public int getTransactionCount(){
         return transactions.size();
     }
+
+    public void addTransaction(Transaction transaction){
+         transactions.add(transaction);
+    }
 }
